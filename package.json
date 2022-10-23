@@ -1,0 +1,9 @@
+{
+	"name": "CZKExchangeRates",
+	"private": true,
+	"scripts": {},
+	"devDependencies": {
+		"vue": "3.2.41",
+		"@wikimedia/codex": "0.2.1"
+	}
+}
