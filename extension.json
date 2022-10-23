@@ -1,9 +1,54 @@
 {
 	"name": "CzkExchangeRates",
 	"author": "Evgenii Golubaev",
-	"url": "https://github.com/RedEminence/CZKExchangeRates-mediawiki-extension",
+	"url": "https://github.com/RedEminence/czk-exchange-rates",
 	"description": "This extension adds a page with currency exchange rates for USD/CZK, EUR/CZK, GBP/CZK pairs",
 	"version": "1.0",
 	"type": "specialpage",
-	"manifest_version": 1
+	"manifest_version": 1,
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\CzkExchangeRates\\": "src/"
+	},
+	"SpecialPages": {
+		"CzkExchangeRates": "MediaWiki\\Extension\\CzkExchangeRates\\SpecialCzkExchangeRates"
+	},
+	"ExtensionMessagesFiles": {
+		"CzkExchangeRatesAlias": "CzkExchangeRates.alias.php"
+	},
+	"MessagesDirs": {
+		"CzkExchangeRates": [
+			"i18n"
+		]
+	},
+	"ServiceWiringFiles": [
+		"src/ServiceWiring.php"
+	],
+	"ResourceModules": {
+		"ext.czkexchangerates.scripts": {
+			"es6": true,
+			"dependencies": [
+				"vue",
+				"@wikimedia/codex"
+			],
+			"targets": [ "mobile", "desktop" ],
+			"messages": [
+			],
+			"localBasePath": "resources/ext.czkexchangerates.scripts",
+			"packageFiles": [
+				"index.js",
+				"App.vue",
+				"store.js"
+			]
+		}
+	},
+	"RestRoutes": [
+		{
+			"path": "/czkexchangerates/v1/czk-exchange-rates",
+			"method": "GET",
+			"class": "MediaWiki\\Extension\\CzkExchangeRates\\RestApi",
+			"services": [
+				"CzkExchangeRates.ExchangeRatesRetriever"
+			]
+		}
+	]
 }
