@@ -1,6 +1,6 @@
 # CzkExchangeRates MediaWiki Extension
 
-An extension that adds a special page to mediawiki with currency exchange rates for USD/CZK, EUR/CZK, GBP/CZK pairs. This information refreshes every 60 seconds and is provided by the [Currencyscoop](https://currencyscoop.com/) API.
+A MediaWiki extension that adds a special page with currency exchange rates for USD/CZK, EUR/CZK, GBP/CZK pairs. This information refreshes every 60 seconds and is provided by the [Currencyscoop](https://currencyscoop.com/) API.
 
 ## Installation
 
@@ -15,7 +15,7 @@ Install NPM modules.
 npm install
 ```
 
-Configure LocalSettings.php - load extension and set an API key from [Currencyscoop.](https://currencyscoop.com/)
+Configure LocalSettings.php - load the extension and set an API key from [Currencyscoop.](https://currencyscoop.com/)
 
 ```
 wfLoadExtension('CzkExchangeRates');
