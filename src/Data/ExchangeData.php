@@ -2,11 +2,10 @@
 
 namespace MediaWiki\Extension\CzkExchangeRates\Data;
 
-class ExchangeData
+use MediaWiki\Extension\CzkExchangeRates\Interfaces\ExchangeDataInterface;
+
+class ExchangeData implements ExchangeDataInterface
 {
-	/**
-	 * @var array should be in format ['USD' => 0.0403, 'EUR' => 0.04, 'GBP' => 0,035]
-	 */
 	private array $rates;
 
 	private string $updatedAt;
@@ -17,11 +16,13 @@ class ExchangeData
 		$this->updatedAt = $updatedAt;
 	}
 
-	public function getCurrencyInfo(): array
+	public function getRates(): array
 	{
-		return [
-			"rates" => $this->rates,
-			'updated_at' => $this->updatedAt
-		];
+		return $this->rates;
+	}
+
+	public function getUpdatedAt(): string
+	{
+		return $this->updatedAt;
 	}
 }

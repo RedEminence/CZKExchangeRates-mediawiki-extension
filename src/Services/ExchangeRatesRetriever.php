@@ -2,7 +2,9 @@
 namespace MediaWiki\Extension\CzkExchangeRates\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 use MediaWiki\Extension\CzkExchangeRates\Data\ExchangeData;
+use MediaWiki\Extension\CzkExchangeRates\Exceptions\CouldNotGetRatesFromApiException;
 use MediaWiki\Extension\CzkExchangeRates\Interfaces\ExchangeRatesRetrieverInterface;
 use Throwable;
 
@@ -14,7 +16,7 @@ class ExchangeRatesRetriever implements ExchangeRatesRetrieverInterface
 
 	private string $czechCrownCode = 'CZK';
 
-	private array $otherCurrencyCodes = ['USD', 'EUR', 'GBP'];
+	private array $otherCurrenciesCodes = ['USD', 'EUR', 'GBP'];
 
 	private Client $httpClient;
 
@@ -34,16 +36,23 @@ class ExchangeRatesRetriever implements ExchangeRatesRetrieverInterface
 
 	public function getExchangeData(): ExchangeData
 	{
-		$response = $this->httpClient->get($this->apiEndpoint, [
-			'query' => [
-				'api_key' => $this->apiKey,
-				'base' => $this->czechCrownCode,
-				'symbols' => implode(',', $this->otherCurrencyCodes)
-			]
-		]);
+		try {
+			$response = $this->httpClient->get($this->apiEndpoint, [
+				'query' => [
+					'api_key' => $this->apiKey,
+					'base' => $this->czechCrownCode,
+					'symbols' => implode(',', $this->otherCurrenciesCodes)
+				]
+			]);
+		} catch (BadResponseException $exception) {
+			throw CouldNotGetRatesFromApiException::create($exception->getCode());
+		}
 
 		$decodedJson = json_decode($response->getBody(), true);
 
-		return new ExchangeData($decodedJson['response']['rates'], $decodedJson['response']['date']);
+		return new ExchangeData(
+			$decodedJson['response']['rates'],
+			$decodedJson['response']['date']
+		);
 	}
 }
