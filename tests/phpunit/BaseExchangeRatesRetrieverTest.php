@@ -8,13 +8,15 @@ use Psr\Http\Message\ResponseInterface;
 
 abstract class BaseExchangeRatesRetrieverTest extends TestCase
 {
-	protected function constructMockExchangeRatesRetriever(array $rates, string $date): ExchangeRatesRetrieverInterface
+	protected function constructMockExchangeRatesRetriever(string $date): ExchangeRatesRetrieverInterface
 	{
 		$httpClientMock = $this->getMockBuilder(Client::class)->getMock();
 		$responseMock = $this->getMockBuilder(ResponseInterface::class)->getMock();
 		$responseMock->method('getBody')->willReturn(json_encode([
 			'response' => [
-				'rates' => $rates,
+				'rates' => [
+					'CZK' => 24
+				],
 				'date' => $date
 			]
 		]));

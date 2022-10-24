@@ -37,21 +37,26 @@ class ExchangeRatesRetriever implements ExchangeRatesRetrieverInterface
 	public function getExchangeData(): ExchangeData
 	{
 		try {
-			$response = $this->httpClient->get($this->apiEndpoint, [
-				'query' => [
-					'api_key' => $this->apiKey,
-					'base' => $this->czechCrownCode,
-					'symbols' => implode(',', $this->otherCurrenciesCodes)
-				]
-			]);
+			$rates = [];
+
+			foreach ($this->otherCurrenciesCodes as $currencyCode) {
+				$response = $this->httpClient->get($this->apiEndpoint, [
+					'query' => [
+						'api_key' => $this->apiKey,
+						'base' => $currencyCode,
+						'symbols' => $this->czechCrownCode
+					]
+				]);
+
+				$decodedJson = json_decode($response->getBody(), true);
+				$rates[$currencyCode] = $decodedJson['response']['rates'][$this->czechCrownCode];
+			}
 		} catch (BadResponseException $exception) {
 			throw CouldNotGetRatesFromApiException::create($exception->getCode());
 		}
 
-		$decodedJson = json_decode($response->getBody(), true);
-
 		return new ExchangeData(
-			$decodedJson['response']['rates'],
+			$rates,
 			$decodedJson['response']['date']
 		);
 	}
