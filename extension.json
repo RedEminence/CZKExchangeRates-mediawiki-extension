@@ -6,6 +6,9 @@
 	"version": "1.0",
 	"type": "specialpage",
 	"manifest_version": 1,
+	"requires": {
+		"MediaWiki": ">= 1.39.0"
+	},
 	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\CzkExchangeRates\\": "src/"
 	},
