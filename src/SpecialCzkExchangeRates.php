@@ -15,6 +15,10 @@ class SpecialCzkExchangeRates extends SpecialPage
 		$output = $this->getOutput();
 		$this->setHeaders();
 
+		$output->addModules( [
+			'ext.czkexchangerates.scripts'
+		] );
+
 		$html = '<div id="czk-exchange-rates"></div>';
 
 		$output->addWikiTextAsInterface($html);
