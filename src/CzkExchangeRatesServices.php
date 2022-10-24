@@ -10,7 +10,7 @@ class CzkExchangeRatesServices
 {
 	public static function getExchangeRatesRetriever(ContainerInterface $services = null) : ExchangeRatesRetrieverInterface
 	{
-		return ( $services ?: MediaWikiServices::getInstance() )
+		return ($services ?: MediaWikiServices::getInstance())
 			->get('CzkExchangeRates.ExchangeRatesRetriever');
 	}
 }
