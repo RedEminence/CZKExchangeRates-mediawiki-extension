@@ -1,7 +1,7 @@
 {
 	"name": "CzkExchangeRates",
 	"author": "Evgenii Golubaev",
-	"url": "https://github.com/RedEminence/czk-exchange-rates",
+	"url": "https://github.com/RedEminence/CzkExchangeRates",
 	"description": "This extension adds a page with currency exchange rates for USD/CZK, EUR/CZK, GBP/CZK pairs",
 	"version": "1.0",
 	"type": "specialpage",
