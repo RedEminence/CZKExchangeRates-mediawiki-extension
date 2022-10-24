@@ -49,7 +49,7 @@ class ExchangeRatesRetriever implements ExchangeRatesRetrieverInterface
 				]);
 
 				$decodedJson = json_decode($response->getBody(), true);
-				$rates[$currencyCode] = $decodedJson['response']['rates'][$this->czechCrownCode];
+				$rates[$currencyCode . '/CZK'] = $decodedJson['response']['rates'][$this->czechCrownCode];
 			}
 		} catch (BadResponseException $exception) {
 			throw CouldNotGetRatesFromApiException::create($exception->getCode());

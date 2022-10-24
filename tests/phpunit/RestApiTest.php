@@ -7,9 +7,9 @@ class RestApiTest extends BaseExchangeRatesRetrieverTest
 	public function testRestApi()
 	{
 		$rates = [
-			'USD' => 24,
-			'EUR' => 24,
-			'GBP' => 24
+			'USD/CZK' => 24,
+			'EUR/CZK' => 24,
+			'GBP/CZK' => 24
 		];
 		$date = '2022-10-23T17:09:34Z';
 

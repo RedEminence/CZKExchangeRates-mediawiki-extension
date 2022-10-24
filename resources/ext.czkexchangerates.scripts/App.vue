@@ -42,7 +42,7 @@ module.exports = exports = Vue.defineComponent( {
 
 			return `<table>
 					<tr>
-						<th>Currency</th>
+						<th>Pair</th>
 						<th>Rate</th>
 					</tr>
 						${currenciesHtml}
