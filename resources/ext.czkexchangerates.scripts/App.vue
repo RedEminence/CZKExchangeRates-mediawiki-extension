@@ -1,6 +1,9 @@
 <template>
 	<div>
-		<div v-if="store.loading"><div class="lds-dual-ring"></div></div>
+		<div v-if="store.loading">
+			<div class="lds-dual-ring"></div>
+		</div>
+		<p class="error" v-if="error">{{ error }}</p>
 		<div v-html="ratesTable"></div>
 		<p v-html="updatedAt"></p>
 	</div>
@@ -10,23 +13,26 @@ const store = require('./store.js');
 
 module.exports = exports = Vue.defineComponent( {
 	name: 'App',
-	props: {
-		title: String
-	},
 	data: function() {
 		return {
 			store,
-			updatedAt: '',
-			ratesTable: ''
+			updatedAt: null,
+			ratesTable: null,
+			error: null
 		};
 	},
 	methods: {
 		updateRates: function() {
 			new mw.Rest().get('/czkexchangerates/v1/czk-exchange-rates').done((response) => {
 				store.loading = false;
-				this.ratesTable = this.buildTable(response.rates)
-				this.updatedAt = `Data was updated at: ${this.formatDate(new Date(response.updated_at))}`;
-			})
+				if (response.success) {
+					const data = response.data
+					this.ratesTable = this.buildTable(data.rates);
+					this.updatedAt = `Data was updated at: ${this.formatDate(new Date(data.updated_at))}`;
+				} else {
+					this.error = response.error;
+				}
+			});
 		},
 		buildTable: function (rates) {
 			let currenciesHtml = '';
