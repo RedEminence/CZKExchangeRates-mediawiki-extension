@@ -7,7 +7,7 @@ namespace MediaWiki\Extension\CzkExchangeRates\Interfaces;
 interface ExchangeDataInterface
 {
 	/**
-	 * @return array in format ['USD' => 0.0403, 'EUR' => 0.04, 'GBP' => 0.035]
+	 * @return array in format ['USD/CZK' => 24, 'EUR/CZK' => 25, 'GBP/CZK' => 26]
 	 */
 	public function getRates(): array;
 
